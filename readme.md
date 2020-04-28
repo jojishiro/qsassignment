@@ -8,8 +8,11 @@ This is a test case assignment for a questioning system using Laravel.
 - Admin user can: Create, edit and delete questions
 - Mod user can: Approve, Reject answerts from plain users
 - Plain user can: Answer the questions
+- Sorting (click to the table headings to sort) and Searching by Question
+- CSV Export
 
 ## Screenshots
+
 
 ![login](./images/login.png)
 
@@ -27,22 +30,21 @@ This is a test case assignment for a questioning system using Laravel.
 
 ![final](./images/user_final.png)
 
+![csv](./images/csv.png)
+
 
 ## How to use
 
 - Clone the repository with __git clone__
-- Use Xampp as your default web server and start _Apache_ and _MySQL_
-- Import the _assignment_ database into your _phpmyadmin_
-- Open command line within the laravel folder and run the server by typing: __php artisan serve__
+- Use __xampp__ as your default web server and start __Apache__ and __MySQL__
+- Import the __assignment__ from the __db folder__ database into your __phpmyadmin__
+- Navigate to root folder and start server: __php artisan serve__
 - Head over to _localhost:8000_ and use the credentials to sign in
 - That's it: launch the main URL or go to __/login__ and login with default credentials __admin@admin.com__ - __password__
 
-## License
-
-MIT
 
 ## Author 
-
 George Zafiris
+
 
 

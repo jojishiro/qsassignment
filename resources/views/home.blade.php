@@ -4,7 +4,6 @@
     <div class="row">
         <div class="col-lg-12">
                 <?php if ($active_user['role'] == 'admin'){ ?>
-
                     <div class="card" style="padding: 20px;">
                         <h4>Question Management</h4>
                         <div class="row">
@@ -18,13 +17,23 @@
                                         <option value="binary">Yes/No</option>
                                     </select>
                                     <input type="submit" value="New Question" class="btn btn-default">
-                                    <a href="/csv" class="btn btn-dark" target="_blank">Make CSV</a>
+                                    <a href="/csv" class="btn btn-dark" target="_blank">Make CSV</a>        
                                 </form>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" id="searchInput" class="form-control" onkeyup="search()" placeholder="Search for question" title="Type in a questions"><br>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div id="res">Search result</div>
+                                    </div>
+                                </div>
+                            <hr>
                                 <table class="table table-striped text-center" id="qTable">
                                     <tr>
                                         <th onclick="sortTable(0)">Question</th>
@@ -36,7 +45,7 @@
                                     <?php foreach($questions as $q){ ?>
                                         <tr>
                                             <form action="{{ URL::to('/edit') }}" method="get">
-                                            <td><input type="text" name="body" value="{{ $q['query_body'] }}" class="form-control"/></td>
+                                            <td><input type="text" name="body" value="{{ $q['query_body'] }}" class="form-control answer"/></td>
                                             <?php if ($q['query_answer'] == 'text'){ ?>
                                                 <td><input type="text" name="answer" value="{{ (!empty($q['query_answer'])) ? $q['query_answer'] : 'Not available' }}" class="form-control"/></td>
                                             <?php } else { ?>
@@ -63,13 +72,13 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>    
 
                 <?php } else if ($active_user['role'] == 'mod'){ ?>
 
                     <div class="card" style="padding: 20px;">
                         <h4>Question Requests</h4>
+                        <p>Manage approvals/rejections</p>
                         <table class="table table-striped" id="qTable">
                         <tr>
                             <th onclick="sortTable(0)">Question</th>
@@ -104,6 +113,7 @@
       
                     <div class="card" style="padding: 20px;">
                         <h4>Question Answers</h4>
+                        <p>Answer questions</p>
                         <table class="table table-striped" id="qTable">
                         <tr>
                             <th onclick="sortTable(0)">Question</th>
@@ -214,7 +224,30 @@ function sortTable(n) {
     }
   }
 }
+
+function search() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toLowerCase();
+    table = document.getElementById("qTable");
+    inputs = document.getElementsByClassName('answer')
+    match = [];
+    for(j = 0; j < inputs.length; j++){
+        if(inputs[j].value.toLowerCase().includes(filter)){
+            match.push(inputs[j].value);
+        }
+    }    
+    if (match.length > 0){
+        document.getElementById('res').innerHTML = '<div class="form-control"><b>' + match[0] + '</b></div>'; 
+    } else if (match.length == 0) {
+        document.getElementById('res').innerHTML = 'Not match';
+    } else {
+        document.getElementById('res').innerHTML = '';
+    }
+}
 </script>
+
+
 @parent
 
 @endsection
